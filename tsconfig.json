@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true, // 从tslib导入辅助工具函数
+    "strict": true, // 启用所有严格类型检查
+    "jsx": "preserve",
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "extends": "./tsconfig.extends.json",
+    "noImplicitAny": false,
+    "types": [
+      "node"
+    ]
+  },
+  // 要编译的文件
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // 不需要编译的文件
+  "exclude": [
+    "node_modules"
+  ]
+}

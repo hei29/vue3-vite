@@ -1,0 +1,10 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <JSCodeStyleSettings version="0">
+      <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
+    </JSCodeStyleSettings>
+    <VueCodeStyleSettings>
+      <option name="INDENT_CHILDREN_OF_TOP_LEVEL" value="template,style,script" />
+    </VueCodeStyleSettings>
+  </code_scheme>
+</component>
