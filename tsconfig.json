@@ -14,6 +14,12 @@
     "lib": ["esnext", "dom"],
     "extends": "./tsconfig.extends.json",
     "noImplicitAny": false,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
     "types": [
       "node"
     ]

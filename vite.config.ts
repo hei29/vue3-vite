@@ -1,17 +1,15 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
+import viteCompression from 'vite-plugin-compression'
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
   // 插件
   plugins: [
-      vue({
-        script: {
-          refSugar: true
-        }
-      })
+      vue(),
+      viteCompression()
   ],
   // 静态文件资源服务文件夹
   publicDir: 'public',
@@ -23,10 +21,10 @@ export default defineConfig({
   },
   build: {
     target: 'es2015',
-    outDir: 'dist'
+    outDir: 'dist',
     // assetsDir: 'public', // 指定静态资源存放路径
-    // sourcemap: false, // 是否构建source map文件
-    // emptyOutDir: true, // 执行打包操作时，清空之前生产包(默认为true)
+    sourcemap: false, // 是否构建source map文件
+    emptyOutDir: true // 执行打包操作时，清空之前生产包(默认为true)
     // terserOptions: {
     //   // 生产环境移除console
     //   compress: {
@@ -38,14 +36,28 @@ export default defineConfig({
   server: {
     https: false, // 是否启用https
     open: true, // 是否自动在浏览器打开
-    port: 4043, // 端口号
+    port: 4003, // 端口号
+    // hmr: true, // 热更新,默认热更新
     strictPort: false, // 为true时端口已被占用则会直接退出，而不是尝试下一个可用端口。
     host: '0.0.0.0', // 监听所有地址
     proxy: {
-      '/tj-gx': {
-        target: 'http://pages.hxgis.com/json/',
-        changeOrigin: true
-        // pathRewrite: { '^/api': '' }
+      '/api': {
+        target: 'http://127.0.0.1:4043',
+        // target: 'http://121.4.46.76:4043',
+        changeOrigin: true,
+        ws: true
+      },
+      '/uploads': {
+        target: 'http://127.0.0.1:4043',
+        // target: 'http://121.4.46.76:4043',
+        changeOrigin: true,
+        ws: true
+      },
+      '/AzurLanne': {
+        // target: 'http://127.0.0.1:4043',
+        target: 'http://121.4.46.76:4043',
+        changeOrigin: true,
+        ws: true
       }
     }
   },
