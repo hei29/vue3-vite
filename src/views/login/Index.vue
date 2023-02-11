@@ -5,8 +5,8 @@
       <div class="login-wrap">
         <div class="form">
           <div class="loginOrRegister">
-            <div class="login-status" :class="{active:pattern==='login'}" @click="pattern = 'login',btnText = '登录'"></div>
-            <div class="register-status" :class="{active:pattern==='register'}" @click="pattern = 'register', btnText = '注册'"></div>
+            <div class="login-status" :class="{active:pattern==='login'}" @click="toggleLoginRegister('login')"></div>
+            <div class="register-status" :class="{active:pattern==='register'}" @click="toggleLoginRegister('register')"></div>
             <label class="login-label">登录</label>
             <label class="register-label">注册</label>
           </div>
@@ -108,9 +108,27 @@
     code: ''
     // identifyPassword: ''
   })
+
+  // 清空注册表单
   const resetRegisterParams = () => {
     for (const t in registerParams) {
       registerParams[t] = ''
+    }
+  }
+
+  // 切换登录/注册
+  const toggleLoginRegister = (val) => {
+    if (val === 'login') {
+      pattern.value = 'login'
+      btnText.value = '登录'
+      resetRegisterParams()
+    } else {
+      pattern.value = 'register'
+      btnText.value = '注册'
+      // 清空登录表单
+      for (const t in loginParams) {
+        loginParams[t] = ''
+      }
     }
   }
 

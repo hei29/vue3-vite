@@ -22,7 +22,7 @@ export default defineConfig({
   build: {
     target: 'es2015',
     outDir: 'dist',
-    // assetsDir: 'public', // 指定静态资源存放路径
+    assetsDir: 'public', // 指定静态资源存放路径
     sourcemap: false, // 是否构建source map文件
     emptyOutDir: true // 执行打包操作时，清空之前生产包(默认为true)
     // terserOptions: {
@@ -32,6 +32,22 @@ export default defineConfig({
     //     drop_debugger: true
     //   }
     // }
+  },
+  css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'internal:charset-removal',
+          AtRule: {
+            charset: (atRule => {
+              if(atRule.name === 'charset') {
+                atRule.remove()
+              }
+            })
+          }
+        }
+      ]
+    }
   },
   server: {
     https: false, // 是否启用https

@@ -1,10 +1,10 @@
 <template>
   <div class="html2canvas">
-    <div class="fn-content" :class="{hide: !control}">
+    <div class="fn-content" :class="{'is-hide': !control}">
       <div class="get-pdf xbox" @click="getPdfFile">导出pdf</div>
       <div class="get-screenshot xbox" @click="getScreenshot">截图</div>
     </div>
-    <div class="circle">
+    <div class="circle" :class="{'is-transparent': !control}">
       <div class="base-circle"></div>
       <div class="on-off" @click="toggleSwitch">
         <img src="./img/screenshot.png" alt="">
@@ -51,9 +51,6 @@ const getPdfFile = () => {
 
 // 导出图片
 const getScreenshot = () => {
-  // html2canvas(props.DOM).then(canvas => {
-  //   document.body.appendChild(canvas)
-  // });
   const save2 = props.DOM
   html2canvas(save2, {
     allowTaint: true, ///允许跨域图片
@@ -127,6 +124,8 @@ const getScreenshot = () => {
     .fn-content {
       width: 50vh;
       height: 50vh;
+      min-width: 360px;
+      min-height: 360px;
       border-radius: 9999px;
       background-color: #33691e;
       transition: .7s;
@@ -161,10 +160,17 @@ const getScreenshot = () => {
       }
     }
 
-    .hide {
+    .is-hide {
       width: 0;
       height: 0;
+      min-width: 0;
+      min-height: 0;
       transition: .7s;
+    }
+    .is-transparent {
+      .base-circle {
+        background-color: transparent!important;
+      }
     }
   }
 </style>
