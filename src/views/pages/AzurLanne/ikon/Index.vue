@@ -7,6 +7,7 @@
             <el-image
                 :src="item"
                 :preview-src-list="cgList[current-1]"
+                :initial-index="i"
                 lazy
                 fit="cover">
               <template #placeholder>
