@@ -12,7 +12,12 @@
           </div>
           <template v-if="pattern==='login'">
             <div class="login-box">
-              <el-form :model="loginParams" label-width="80" ref="loginFormRule" :rules="loginRules">
+              <el-form
+                  :model="loginParams"
+                  label-width="80"
+                  ref="loginFormRule"
+                  status-icon
+                  :rules="loginRules">
                 <el-form-item prop="username" label="账号">
                   <el-input
                       placeholder="请输入账号"
@@ -44,14 +49,19 @@
           </template>
           <template v-else>
             <div class="register-box">
-              <el-form :model="registerParams" label-width="80px" ref="registerFormRule" :rules="registerRules">
+              <el-form
+                  :model="registerParams"
+                  label-width="80px"
+                  ref="registerFormRule"
+                  status-icon
+                  :rules="registerRules">
                 <el-form-item prop="username" label="账号">
                   <el-input placeholder="请输入账号" size="default" v-model.trim="registerParams.username"/>
                 </el-form-item>
                 <el-form-item prop="password" label="密码">
                   <el-input placeholder="请输入密码" type="password" :show-password="true" size="default" v-model.trim="registerParams.password"/>
                 </el-form-item>
-                <el-form-item prop="username" label="昵称">
+                <el-form-item prop="nickname" label="昵称">
                   <el-input placeholder="请输入昵称" size="default" v-model.trim="registerParams.nickname"/>
                 </el-form-item>
                 <el-form-item prop="email" label="邮箱">
@@ -60,12 +70,9 @@
                 <el-form-item prop="code" label="">
                   <div class="code_list">
                     <el-input placeholder="请输入验证码" size="default" v-model.trim="registerParams.code"/>
-                    <el-button class="code_btn" type="primary" @click="getCode">获取验证码</el-button>
+                    <el-button class="code_btn" type="primary" @click="getCode(registerFormRule)">获取验证码</el-button>
                   </div>
                 </el-form-item>
-<!--                <el-form-item prop="identifyPassword" label="确认密码">-->
-<!--                  <el-input placeholder="再次输入密码" type="password" :show-password="true" size="default" v-model.trim="registerParams.identifyPassword"/>-->
-<!--                </el-form-item>-->
               </el-form>
               <el-row style="margin-top: 30px">
                 <el-button class="login-btn" @click="registerUser(registerFormRule)">
@@ -106,8 +113,17 @@
     email: '',
     password: '',
     code: ''
-    // identifyPassword: ''
   })
+
+  const checkEmail = (rule:any, value:any, callback: Function) => {
+    const REG = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+    if(value === '') {
+      callback('邮箱不能为空')
+    } else {
+      REG.test(value) || callback('不支持的邮箱格式')
+    }
+    callback()
+  }
 
   // 清空注册表单
   const resetRegisterParams = () => {
@@ -141,10 +157,9 @@
   const registerRules = reactive<FormRules>({
     username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
     nickname: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
-    email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
+    email: [{ validator: checkEmail, trigger: 'blur' }],
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
     code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
-    // identifyPassword: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
   })
 
   // 用户登录
@@ -182,13 +197,20 @@
   }
 
   // 获取验证码
-  const getCode = () => {
-    // 验证邮箱 registerParams.email
-
-    sendMail({
-      email: registerParams.email
-    }).then(res => {
-      console.log(res)
+  const getCode = (fromEl: FormInstance | undefined) => {
+    fromEl.validateField('email', (val) => {
+      if(!val) {
+        sendMail({
+          email: registerParams.email
+        }).then(res => {
+          const {status, msg} = res
+          if(status === 200) {
+            ElMessage.success('验证码已发送')
+          } else {
+            ElMessage.error(msg)
+          }
+        })
+      }
     })
   }
 

@@ -164,6 +164,7 @@ const changePwd = async(formEl: FormInstance | undefined) => {
         .user-icon {
           width: 100%;
           height: 100%;
+          object-fit: cover;
         }
       }
 
