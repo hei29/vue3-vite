@@ -69,7 +69,7 @@ export default defineConfig({
         changeOrigin: true,
         ws: true
       },
-      '/AzurLanne': {
+      '/AzurLane': {
         // target: 'http://127.0.0.1:4043',
         target: 'http://121.4.46.76:4043',
         changeOrigin: true,

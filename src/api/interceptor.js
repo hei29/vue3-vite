@@ -39,7 +39,9 @@ request.interceptors.response.use((response) => {
     if(response.config.responseType === 'blob')  return res
     // 兼容服务端返回字符串
     if (typeof res === 'string') {
-        res = res ? JSON.parse(res) : res
+        try {
+            res = JSON.parse(res)
+        } catch (e) {}
     }
     return res
 }, (err) => {

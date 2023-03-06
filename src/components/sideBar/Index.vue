@@ -2,15 +2,14 @@
   <div class="bar_list">
     <router-link
          class="bar_item"
-         @click="changeItem(i)"
          v-for="(item,i) in barList"
          :to="item.path"
          active-class="active"
          :key="i">
-      <template v-if="item.icon">
-        <img :src="item.activeIcon" v-if="value===i" alt="">
-        <img :src="item.icon" v-else alt="">
-      </template>
+<!--      <template v-if="item.icon">-->
+<!--        <img :src="item.activeIcon" v-if="value===i" alt="">-->
+<!--        <img :src="item.icon" v-else alt="">-->
+<!--      </template>-->
       <span>{{item.name}}</span>
     </router-link>
   </div>
@@ -22,16 +21,12 @@
     barList: Array
   })
 
-  const value = ref<any>()
-  const changeItem = (val) => {
-    value.value = val
-  }
-
 </script>
 
 <style scoped lang="less">
   .bar_list {
     width: 220px;
+    max-width: 20%;
     background: #4d5f75;
 
     .bar_item {

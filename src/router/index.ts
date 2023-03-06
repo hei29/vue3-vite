@@ -19,20 +19,25 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/pages/home/Index.vue')
             },
             {
-                path: 'AzurLanne',
+                path: 'AzurLane',
                 name: '碧蓝航线',
-                component: () => import('@/views/pages/AzurLanne/Index.vue'),
-                redirect: 'AzurLanne/role',
+                component: () => import('@/views/pages/AzurLane/Index.vue'),
+                redirect: 'AzurLane/role',
                 children: [
                     {
                         path: 'role',
                         name: '图鉴',
-                        component: () => import('@/views/pages/AzurLanne/role/Index.vue')
+                        component: () => import('@/views/pages/AzurLane/role/Index.vue')
+                    },
+                    {
+                        path: 'role/:name',
+                        name: '角色信息',
+                        component: () => import('@/views/pages/AzurLane/roleMessage/Index.vue')
                     },
                     {
                         path: 'ikon',
                         name: '插画',
-                        component: () => import('@/views/pages/AzurLanne/ikon/Index.vue')
+                        component: () => import('@/views/pages/AzurLane/ikon/Index.vue')
                     }
                 ]
             }
@@ -73,6 +78,7 @@ router.beforeEach((to, from, next) => {
     if (to.name) {
         typeof to.name === "string" ? document.title = to.name : null;
     }
+    // if(to.params?.shin)console.log(to.params.shin)
     if (!user.token && token) {
         userInfo().then((res) => {
             if (res.status === 200) {

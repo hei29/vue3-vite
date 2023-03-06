@@ -34,6 +34,7 @@ module .exports = {
         }],
         "no-unused-vars": 0,
         "no-console": 'off', // off => 0, warn => 1, error => 2
+        "semi": "off"
     },
     plugins: ['vue', 'import'],
     // 设置解析器选项。

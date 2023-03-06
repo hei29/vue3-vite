@@ -2,7 +2,7 @@
   <div class="nav_header">
     <div class="router_list">
       <router-link to="/pages/home" class="router_item" active-class="active">主页</router-link>
-      <router-link to="/pages/AzurLanne" class="router_item" active-class="active">AzurLanne</router-link>
+      <router-link to="/pages/AzurLane" class="router_item" active-class="active">AzurLane</router-link>
     </div>
     <div class="user_msg">
       <div class="user_pic">
@@ -94,10 +94,7 @@ const form = reactive({
   oldPwd: '',
   newPwd: ''
 })
-// const pwdRules = reactive<FormRules>({
-//   oldPwd: [{required: true, message: '新密码不为空', trigger: 'blur'}],
-//   newPwd: [{required: true, message: '新密码不为空', trigger: 'blur'}]
-// })
+
 const formRef = ref<FormInstance>()
 // 修改密码
 const changePwd = async(formEl: FormInstance | undefined) => {
@@ -127,16 +124,21 @@ const changePwd = async(formEl: FormInstance | undefined) => {
     box-shadow: 0 2px 5px #33333350;
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 1%;
     z-index: 20;
 
     .router_list {
+      flex: 1;
       height: 2.5rem;
-      padding-left: 6rem;
+      padding-left: 5%;
+      display: flex;
+      overflow: hidden;
+      overflow-x: auto;
 
       .router_item {
+        flex-shrink: 0;
         display: inline-block;
-        margin-right: 2.5rem;
+        margin-right: 1.2%;
         line-height: 2.5rem;
         width: 6rem;
         text-decoration: none;
@@ -146,7 +148,7 @@ const changePwd = async(formEl: FormInstance | undefined) => {
       }
       .active {
         background-color: #409eff;
-        //color: #4E83FD;
+        color: #FFFFFF;
       }
     }
 
@@ -194,5 +196,9 @@ const changePwd = async(formEl: FormInstance | undefined) => {
 
   }
 
-
+  @media screen and (max-width: 1000px){
+    .nav_header .router_list .router_item {
+      margin-right: 12px;
+    }
+  }
 </style>

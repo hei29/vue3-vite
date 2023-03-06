@@ -36,6 +36,7 @@
     :deep(.el-row) {
 
       .el-col {
+        margin-bottom: 12px;
 
         .el-card {
           height: 0;

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import {back} from '@/utils'
+  import {back} from '@/store/router'
   export default {
     name: "XtBack",
     data() {

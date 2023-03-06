@@ -1,14 +1,14 @@
 <template>
   <div class="role">
     <div class="sizer_body">
-      <div class="screen">
+      <div class="search">
         <div class="sizer" @click="showSizer = !showSizer">
           <img src="~/assets/img/arrow.png" v-show="showSizer" alt="">
           <img class="flip" src="~/assets/img/arrow.png" v-show="!showSizer" alt="">
           筛选
         </div>
         <el-input v-model="shipName" clearable placeholder="名称搜索" @input="getSizerShip" />
-        <el-button type="primary">查询</el-button>
+<!--        <el-button type="primary">查询</el-button>-->
       </div>
       <div class="type_choice" v-show="showSizer">
         <xt-check-group type="类型" :type-list="option.type" v-model:value="type"></xt-check-group>
@@ -17,34 +17,37 @@
       </div>
     </div>
     <div class="body">
-      <div class="body_item" v-for="(val, i) in sizerShip" :key="val.painting">
-        <div class="ship">
-          <img :src="'/AzurLanne/shipIcon/' + val.painting + '.png'" loading="lazy" alt="">
-          <span>{{val.name}}</span>
-        </div>
-      </div>
+      <el-row>
+        <el-col v-for="(val, i) in sizerShip" :xl="3" :lg="4" :md="6" :sm="8" :xs="12" :key="val.painting">
+          <div class="ship" @click="findShip(val)">
+            <img :src="'/AzurLane/shipIcon/' + val.painting + '.png'" loading="lazy" alt="">
+            <span>{{val.name}}</span>
+          </div>
+        </el-col>
+      </el-row>
+
     </div>
   </div>
 
 </template>
 
 <script setup lang="ts">
-  import moment from "moment";
   import option from '../json/option.json'
   import ship from '../json/ship.json'
 
-  import {computed, onMounted, ref, watch} from "vue";
-  import {useRoute} from "vue-router";
+  import {onMounted, ref, watch} from "vue";
+  import {useRoute, useRouter} from "vue-router";
 
   const route = useRoute()
+  const router = useRouter()
   onMounted(() => {
     getAllShip(ship)
   })
 
-  let allShip:object[]
+  let allShip:Object[]
   const sizerShip = ref<any>([])
   const getAllShip = (data) => {
-    const arr:object[] = []
+    const arr:Object[] = []
     for (let t in data) {
       arr.push(data[t])
     }
@@ -64,20 +67,35 @@
 
   // 获取筛选的船
   const getSizerShip = () => {
-    let shipParent:object[]
+    let shipParent:Object[]
     if(shipName.value) {
       const pattern = new RegExp(decodeURIComponent(shipName.value))
-      const search = allShip.filter(t => {
+      const search = allShip.filter((t:any) => {
         return pattern.test(t.name)
       })
       shipParent = search
     } else {
       shipParent = allShip
     }
-    sizerShip.value = shipParent.filter(t => {
+    sizerShip.value = shipParent.filter((t:any) => {
       return (!type.value.length || type.value.includes(t.type)) &&
              (!rarity.value.length || rarity.value.includes(t.rarity)) &&
              (!nationality.value.length || nationality.value.includes(t.nationality))
+    })
+  }
+
+  // 查看详情
+  interface Ship {
+    name: string,
+    [key: string]: any
+  }
+  const findShip = (val: Ship) => {
+    // 使用params传参时,必须使用name进行跳转,params传递的参数会在刷新后消失,其中如果使用路由变量会保存下来
+    router.push({
+      name: '角色信息',
+      params: {
+        name: val.painting
+      }
     })
   }
 </script>
@@ -85,19 +103,20 @@
 <style scoped lang="less">
   .role {
     height: 100%;
-    margin-left: 30px;
+    margin-left: 1.5%;
     display: flex;
     flex-direction: column;
 
     .sizer_body {
       box-shadow: 5px 5px 5px #33333350;
 
-      .screen {
+      .search {
         display: flex;
         justify-content: center;
         margin: 20px 0;
 
         .sizer {
+          white-space: nowrap;
           display: flex;
           align-items: center;
           height: 40px;
@@ -133,46 +152,53 @@
 
       .type_choice {
         margin-bottom: 8px;
+        max-height: 300px;
+        overflow: auto;
       }
     }
 
     .body {
-      //flex: 1;
       overflow: auto;
       display: flex;
       flex-wrap: wrap;
 
-      .body_item {
-        width: 12.5%;
-        height: 240px;
-        padding: 15px 12px;
+      :deep(.el-row) {
+        width: 100%;
 
-        .ship {
-          width: 100%;
-          height: 100%;
-          position: relative;
-          box-shadow: 0 0 12px rgba(0, 0, 0, .12);
+        .el-col {
+          padding: 15px 12px;
 
-          img {
-            height: 100%;
+          .ship {
             width: 100%;
-            object-fit: contain;
-          }
+            height: 0;
+            padding-bottom: 132%;
+            position: relative;
+            box-shadow: 0 0 12px rgba(0, 0, 0, .12);
 
-          span {
-            position: absolute;
-            left: 0;
-            bottom: 5%;
-            width: 100%;
-            background-color: rgba(0,0,0,.5);
-            color: #FFFFFF;
-            text-align: center;
-            font-size: 16px;
-            padding-bottom: 3px;
-          }
+            img {
+              position: absolute;
+              left: 0;
+              height: 100%;
+              width: 100%;
+              object-fit: contain;
+            }
 
+            span {
+              position: absolute;
+              left: 0;
+              bottom: 5%;
+              width: 100%;
+              background-color: rgba(0,0,0,.5);
+              color: #FFFFFF;
+              text-align: center;
+              font-size: 16px;
+              padding-bottom: 3px;
+            }
+
+          }
         }
       }
+
     }
   }
 

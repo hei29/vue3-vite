@@ -16,7 +16,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // 定义全局方法
-app.config.globalProperties.$back = () => {
+app.config.globalProperties.back = () => {
     router.go(-1)
 }
 app.config.globalProperties.toPage = (name) => {

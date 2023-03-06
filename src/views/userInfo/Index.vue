@@ -48,9 +48,6 @@
 </template>
 
 <script setup lang="ts">
-// 获取全局proxy属性，使用全局方法proxy.$back
-// import {getCurrentInstance} from "vue";
-// const { proxy }:any = getCurrentInstance()
 import {computed, onMounted, reactive, ref} from 'vue'
 import {ElMessage} from 'element-plus'
 import type { UploadProps } from 'element-plus'
