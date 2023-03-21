@@ -27,6 +27,9 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: 'role',
                         name: '图鉴',
+                        meta: {
+                            keepAlive: true
+                        },
                         component: () => import('@/views/pages/AzurLane/role/Index.vue')
                     },
                     {

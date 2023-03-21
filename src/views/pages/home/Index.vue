@@ -20,11 +20,13 @@
       </el-col>
     </el-row>
   </div>
-  <Html2Canvas></Html2Canvas>
+  <NetWork></NetWork>
+<!--  <Html2Canvas></Html2Canvas>-->
 </template>
 
 <script setup lang="ts">
-  import Html2Canvas from '@/components/html2canvas/Index.vue'
+  // import Html2Canvas from '@/components/html2canvas/Index.vue'
+  import NetWork from '@/views/pages/home/network/Index.vue'
 </script>
 
 <style scoped lang="less">

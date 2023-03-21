@@ -2,7 +2,12 @@
   <div class="AzurLane">
     <Menu></Menu>
     <div class="content">
-      <router-view></router-view>
+      <router-view v-slot="{Component}">
+        <keep-alive>
+          <component :is="Component" v-if="$route.meta.keepAlive"></component>
+        </keep-alive>
+        <component :is="Component" v-if="!$route.meta.keepAlive"></component>
+      </router-view>
     </div>
   </div>
 </template>

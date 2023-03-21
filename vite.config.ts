@@ -55,7 +55,7 @@ export default defineConfig({
     port: 4003, // 端口号
     // hmr: true, // 热更新,默认热更新
     strictPort: false, // 为true时端口已被占用则会直接退出，而不是尝试下一个可用端口。
-    host: '0.0.0.0', // 监听所有地址
+    host: '192.168.1.102', // 监听所有地址, 手机测试需换成ipv4地址
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:4043',
