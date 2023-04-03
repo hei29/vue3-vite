@@ -5,9 +5,7 @@
 </template>
 
 <script setup lang="ts">
-const fn = () => {
 
-}
 </script>
 
 <style lang="less">

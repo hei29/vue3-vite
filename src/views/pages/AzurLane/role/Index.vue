@@ -141,6 +141,10 @@
             border-radius: 0;
             border: 1px solid #dcdfe6;
             padding-left: 16px;
+
+            //&:placeholder-shown +.el-input__suffix {
+            //  display: none;
+            //}
           }
         }
 
