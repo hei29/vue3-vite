@@ -3,12 +3,10 @@
 </template>
 
 <script>
-  import {back} from '@/store/router'
   export default {
     name: "XtBack",
     data() {
       return {
-        back
       }
     }
   }

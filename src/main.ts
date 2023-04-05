@@ -6,11 +6,12 @@ import 'element-plus/dist/index.css'
 import XUI from './modules/xt-ui'
 import myOrder from './directives' // 自定义指令
 
+import { i18n } from '@/lang'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 
 const app = createApp(App);
-
+// 全局注册图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
@@ -23,4 +24,4 @@ app.config.globalProperties.toPage = (name) => {
     router.push({name})
 }
 
-app.use(ElementPlus).use(router).use(XUI).use(myOrder).mount('#app')
+app.use(ElementPlus).use(router).use(XUI).use(i18n).use(myOrder).mount('#app')

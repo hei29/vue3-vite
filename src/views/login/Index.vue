@@ -1,88 +1,93 @@
 <template>
   <div class="login">
-
-    <div class="right-wrap">
-      <div class="login-wrap">
-        <div class="form">
-          <div class="loginOrRegister">
-            <div class="login-status" :class="{active:pattern==='login'}" @click="toggleLoginRegister('login')"></div>
-            <div class="register-status" :class="{active:pattern==='register'}" @click="toggleLoginRegister('register')"></div>
-            <label class="login-label">登录</label>
-            <label class="register-label">注册</label>
-          </div>
-          <template v-if="pattern==='login'">
-            <div class="login-box">
-              <el-form
-                  :model="loginParams"
-                  label-width="80"
-                  ref="loginFormRule"
-                  status-icon
-                  :rules="loginRules">
-                <el-form-item prop="username" label="账号">
-                  <el-input
-                      placeholder="请输入账号"
-                      size="default"
-                      @keydown.enter="loginUser(loginFormRule)"
-                      v-model.trim="loginParams.username"/>
-                </el-form-item>
-                <el-form-item prop="password" label="密码">
-                  <el-input
-                      placeholder="请输入密码"
-                      size="default"
-                      v-model.trim="loginParams.password"
-                      type="password"
-                      :show-password="true"
-                      autocomplete="off"
-                      @keydown.enter="loginUser(loginFormRule)"
-                  />
-                </el-form-item>
-              </el-form>
-              <el-row>
-                <span class="forgot-password">忘记密码</span>
-              </el-row>
-              <el-row style="margin-top: 30px">
-                <el-button class="login-btn" @click="loginUser(loginFormRule)">
-                  {{ btnText }}
-                </el-button>
-              </el-row>
-            </div>
-          </template>
-          <template v-else>
-            <div class="register-box">
-              <el-form
-                  :model="registerParams"
-                  label-width="80px"
-                  ref="registerFormRule"
-                  status-icon
-                  :rules="registerRules">
-                <el-form-item prop="username" label="账号">
-                  <el-input placeholder="请输入账号" size="default" v-model.trim="registerParams.username"/>
-                </el-form-item>
-                <el-form-item prop="password" label="密码">
-                  <el-input placeholder="请输入密码" type="password" :show-password="true" size="default" v-model.trim="registerParams.password"/>
-                </el-form-item>
-                <el-form-item prop="nickname" label="昵称">
-                  <el-input placeholder="请输入昵称" size="default" v-model.trim="registerParams.nickname"/>
-                </el-form-item>
-                <el-form-item prop="email" label="邮箱">
-                  <el-input placeholder="请输入邮箱" size="default" v-model.trim="registerParams.email"/>
-                </el-form-item>
-                <el-form-item prop="code" label="">
-                  <div class="code_list">
-                    <el-input placeholder="请输入验证码" size="default" v-model.trim="registerParams.code"/>
-                    <el-button class="code_btn" type="primary" @click="getCode(registerFormRule)">获取验证码</el-button>
-                  </div>
-                </el-form-item>
-              </el-form>
-              <el-row style="margin-top: 30px">
-                <el-button class="login-btn" @click="registerUser(registerFormRule)">
-                  {{ btnText }}
-                </el-button>
-              </el-row>
-            </div>
-          </template>
-        </div>
+    <div class="login-wrap">
+      <div class="loginOption">
+        <div class="login-status" :class="{active:pattern==='login'}" @click="toggleLoginRegister('login')"></div>
+        <div class="register-status" :class="{active:pattern==='register'}" @click="toggleLoginRegister('register')"></div>
+        <label class="login-label">登录</label>
+        <label class="register-label">注册</label>
       </div>
+      <template v-if="pattern==='login'">
+        <div class="login-box">
+          <el-form
+              :model="loginParams"
+              label-width="80"
+              ref="loginFormRule"
+              status-icon
+              :rules="loginRules">
+            <el-form-item prop="username" label="账号">
+              <el-input
+                  placeholder="请输入账号"
+                  size="default"
+                  @keydown.enter="loginUser(loginFormRule)"
+                  v-model.trim="loginParams.username"/>
+            </el-form-item>
+            <el-form-item prop="password" label="密码">
+              <el-input
+                  placeholder="请输入密码"
+                  size="default"
+                  v-model.trim="loginParams.password"
+                  type="password"
+                  :show-password="true"
+                  autocomplete="off"
+                  @keydown.enter="loginUser(loginFormRule)"
+              />
+            </el-form-item>
+          </el-form>
+          <el-row>
+            <div class="lang">
+              <span>language</span>
+              <el-select v-model="language">
+                <el-option
+                    v-for="(t,i) in langList"
+                    :label="t.label"
+                    :value="t.value"
+                    :key="i"></el-option>
+              </el-select>
+            </div>
+            <span class="forgot-password">忘记密码</span>
+          </el-row>
+          <el-row style="margin-top: 30px">
+            <el-button class="login-btn" @click="loginUser(loginFormRule)">
+              {{ btnText }}
+            </el-button>
+          </el-row>
+        </div>
+      </template>
+      <template v-else>
+        <div class="register-box">
+          <el-form
+              :model="registerParams"
+              label-width="80px"
+              ref="registerFormRule"
+              status-icon
+              :rules="registerRules">
+            <el-form-item prop="username" label="账号">
+              <el-input placeholder="请输入账号" size="default" v-model.trim="registerParams.username"/>
+            </el-form-item>
+            <el-form-item prop="password" label="密码">
+              <el-input placeholder="请输入密码" type="password" :show-password="true" size="default" v-model.trim="registerParams.password"/>
+            </el-form-item>
+            <el-form-item prop="nickname" label="昵称">
+              <el-input placeholder="请输入昵称" size="default" v-model.trim="registerParams.nickname"/>
+            </el-form-item>
+            <el-form-item prop="email" label="邮箱">
+              <el-input placeholder="请输入邮箱" size="default" v-model.trim="registerParams.email"/>
+            </el-form-item>
+            <el-form-item prop="code" label="">
+              <div class="code_list">
+                <el-input placeholder="请输入验证码" size="default" v-model.trim="registerParams.code"/>
+                <el-button class="code_btn" type="primary" @click="getCode(registerFormRule)">获取验证码</el-button>
+              </div>
+            </el-form-item>
+          </el-form>
+          <el-row style="margin-top: 30px">
+            <el-button class="login-btn" @click="registerUser(registerFormRule)">
+              {{ btnText }}
+            </el-button>
+          </el-row>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -102,6 +107,21 @@
   onMounted(() => {
   })
 
+  const language = ref<string>('zh')
+  const langList = [
+    {
+      label: '中文',
+      value: 'zh'
+    },
+    {
+      label: 'English',
+      value: 'en'
+    },
+    {
+      label: '日本語',
+      value: 'jp'
+    }
+  ]
 
   const loginParams = reactive({
     username: '',
@@ -234,13 +254,6 @@
     .register-box {
       :deep(.el-form-item) {
         margin: 14px 0;
-
-        .el-cascader {
-          width: 100%;
-        }
-        .el-select {
-          width: 100%;
-        }
       }
     }
     :deep(.el-form) {
@@ -277,114 +290,78 @@
       line-height: 40px;
     }
 
-    .right-wrap {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      background-color: #FFF;
+    .login-wrap {
+      width: 440px;
+      height: 550px;
+      padding: 40px 30px;
+      border-radius: 5px;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background-size: cover;
+      box-shadow: 0 0 10px rgba(28, 76, 186, .1);
 
-      .login-wrap {
-        width: 440px;
-        height: 550px;
-        border-radius: 5px;
+      .loginOption {
+        display: flex;
+        height: 46px;
+        font-size: 22px;
+        white-space: nowrap;
+        position: relative;
         overflow: hidden;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        background-size: cover;
-        box-shadow: 0 0 10px rgba(28, 76, 186, .1);
 
-        .form {
-          width: 100%;
-          height: 100%;
-          box-sizing: border-box;
-          padding: 40px 30px;
-          background: #fff;
-
-          .loginOrRegister {
-            display: flex;
-            height: 46px;
-            font-size: 22px;
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
-
-            .login-status,.register-status {
-              height: 46px;
-              width: calc(50% + 23px);
-              text-align: center;
-              transform: skew(-45deg);
-              cursor: pointer;
-            }
-            .active {
-              background: #4E83FD20;
-            }
-            .login-status {
-              position: absolute;
-              top: 0;
-              left: -23px;
-            }
-            .register-status {
-              position: absolute;
-              top: 0;
-              right: -23px;
-            }
-            .login-label {
-              position: absolute;
-              top: 50%;
-              left: 25%;
-              transform: translate(-50%, -50%);
-              pointer-events: none;
-            }
-            .register-label {
-              position: absolute;
-              top: 50%;
-              right: 25%;
-              transform: translate(50%, -50%);
-              pointer-events: none;
-            }
-          }
-
-          .input-label {
-            color: #333;
-            font-size: 14px;
-            display: block;
-            text-align: left;
-          }
-
-          .forgot-password {
-            margin: 5px 0 0 auto;
-          }
-
-          .code {
-            display: flex;
-            justify-content: space-between;
-
-            .el-input {
-              flex: 1;
-              margin-right: 20px;
-            }
-
-            img {
-              width: 115px;
-              height: 40px;
-              cursor: pointer;
-              border-radius: 5px;
-              background: #f8f8f8 !important;
-            }
-          }
-
-          .login-btn {
-            width: 100%;
-            height: 40px;
-            border: 0;
-            color: #fff;
-            background: #4E83FD;
-          }
+        .login-status,.register-status {
+          height: 46px;
+          width: calc(50% + 23px);
+          text-align: center;
+          transform: skew(-45deg);
+          cursor: pointer;
         }
+        .active {
+          background: #4E83FD20;
+        }
+        .login-status {
+          position: absolute;
+          top: 0;
+          left: -23px;
+        }
+        .register-status {
+          position: absolute;
+          top: 0;
+          right: -23px;
+        }
+        .login-label {
+          position: absolute;
+          top: 50%;
+          left: 25%;
+          transform: translate(-50%, -50%);
+          pointer-events: none;
+        }
+        .register-label {
+          position: absolute;
+          top: 50%;
+          right: 25%;
+          transform: translate(50%, -50%);
+          pointer-events: none;
+        }
+      }
+
+      .lang {
+
+      }
+      .forgot-password {
+        margin: 5px 0 0 auto;
+      }
+
+      .login-btn {
+        width: 100%;
+        height: 40px;
+        border: 0;
+        color: #fff;
+        background: #4E83FD;
       }
     }
   }

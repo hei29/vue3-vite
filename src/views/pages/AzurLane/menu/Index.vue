@@ -8,18 +8,18 @@
       mode="vertical" router>
     <el-menu-item index="/pages/AzurLane/role">
       <el-icon><Management /></el-icon>
-      <span>图鉴</span>
+      <span>{{$t('pages.AzurLane.role')}}</span>
     </el-menu-item>
     <el-menu-item index="/pages/AzurLane/ikon">
       <el-icon><PictureFilled /></el-icon>
-      <span>插画</span>
+      <span>{{$t('pages.AzurLane.ikon')}}</span>
     </el-menu-item>
     <el-menu-item index="" @click="hide=!hide">
       <el-icon>
         <Expand v-if="hide" />
         <Fold v-else />
       </el-icon>
-      <span>收起菜单</span>
+      <span>{{$t('pages.AzurLane.fold')}}</span>
     </el-menu-item>
   </el-menu>
 </template>

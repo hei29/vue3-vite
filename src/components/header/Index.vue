@@ -1,8 +1,8 @@
 <template>
   <div class="nav_header">
     <div class="router_list">
-      <router-link to="/pages/home" class="router_item" active-class="active">主页</router-link>
-      <router-link to="/pages/AzurLane" class="router_item" active-class="active">AzurLane</router-link>
+      <router-link to="/pages/home" class="router_item" active-class="active">{{$t('header.home')}}</router-link>
+      <router-link to="/pages/AzurLane" class="router_item" active-class="active">{{$t('header.az')}}</router-link>
     </div>
     <div class="user_msg">
       <div class="user_pic">
@@ -12,10 +12,10 @@
       <el-dropdown trigger="click">
         <div class="login_fn"></div>
         <template #dropdown>
-          <el-dropdown-item @click="exit">退出登录</el-dropdown-item>
-          <el-dropdown-item @click="userSetting">个人中心</el-dropdown-item>
-          <el-dropdown-item v-if="user.authority<2" @click="userManage">用户管理</el-dropdown-item>
-          <el-dropdown-item @click="modifyVisible = true">修改密码</el-dropdown-item>
+          <el-dropdown-item @click="exit">{{$t('setting.unLogin')}}</el-dropdown-item>
+          <el-dropdown-item @click="userSetting">{{$t('setting.userInfo')}}</el-dropdown-item>
+          <el-dropdown-item v-if="user.authority<2" @click="userManage">{{$t('setting.userManage')}}</el-dropdown-item>
+          <el-dropdown-item @click="modifyVisible = true">{{$t('setting.changePwd')}}</el-dropdown-item>
         </template>
       </el-dropdown>
     </div>

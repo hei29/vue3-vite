@@ -13,7 +13,7 @@ import skin from '../json/skin.json'
 import {Application, Container, Texture, Rectangle, Sprite, Assets} from 'pixi.js'
 import {onMounted, onUnmounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
-import { load } from '@/store/load'
+import { loadImg } from '@/store/load'
 import { elementResize } from '@/store/resize'
 
 onMounted(async () => {
@@ -111,7 +111,7 @@ const handlePainting = () => {
       const { size, rawSize, pivot, position } = paintingJson[t]
       Assets.add(t, `/AzurLane/painting/${file}/${t}.png`)
       Assets.load(t).then(async (texture) => {
-        const objData = await load(file, t + '-mesh.obj')
+        const objData = await loadImg(file, t + '-mesh.obj')
         if(paintingJson[t].raw === true) {
           container = new Container()
           let sprite = new Sprite(texture)

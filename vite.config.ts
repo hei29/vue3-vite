@@ -58,14 +58,14 @@ export default defineConfig({
     host: '0.0.0.0', // 监听所有地址, 手机测试需换成ipv4地址
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:4043',
-        // target: 'http://121.4.46.76:4043',
+        // target: 'http://127.0.0.1:4043',
+        target: 'http://121.4.46.76:4043',
         changeOrigin: true,
         ws: true
       },
       '/uploads': {
-        target: 'http://127.0.0.1:4043',
-        // target: 'http://121.4.46.76:4043',
+        // target: 'http://127.0.0.1:4043',
+        target: 'http://121.4.46.76:4043',
         changeOrigin: true,
         ws: true
       },
