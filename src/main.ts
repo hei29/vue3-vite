@@ -5,7 +5,6 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import XUI from './modules/xt-ui'
 import myOrder from './directives' // 自定义指令
-
 import { i18n } from '@/lang'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 

@@ -31,11 +31,8 @@
   // import Html2Canvas from '@/components/html2canvas/Index.vue'
   import NetWork from '@/components/network/Index.vue'
   import {onMounted, ref} from "vue";
-  import {useI18n} from "vue-i18n";
 
-  const {locale} = useI18n()
   onMounted(() => {
-    console.log(locale)
     if (navigator.connection) {
       getNetwork()
       navigator.connection.addEventListener('change', () => {

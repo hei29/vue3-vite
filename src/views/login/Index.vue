@@ -4,27 +4,27 @@
       <div class="loginOption">
         <div class="login-status" :class="{active:pattern==='login'}" @click="toggleLoginRegister('login')"></div>
         <div class="register-status" :class="{active:pattern==='register'}" @click="toggleLoginRegister('register')"></div>
-        <label class="login-label">登录</label>
-        <label class="register-label">注册</label>
+        <label class="login-label">Login</label>
+        <label class="register-label">Register</label>
       </div>
       <template v-if="pattern==='login'">
         <div class="login-box">
           <el-form
               :model="loginParams"
-              label-width="80"
+              label-width="100px"
               ref="loginFormRule"
               status-icon
               :rules="loginRules">
-            <el-form-item prop="username" label="账号">
+            <el-form-item prop="username" :label="$t('login.admin')">
               <el-input
-                  placeholder="请输入账号"
+                  :placeholder="$t('login.adminPlaceholder')"
                   size="default"
                   @keydown.enter="loginUser(loginFormRule)"
                   v-model.trim="loginParams.username"/>
             </el-form-item>
-            <el-form-item prop="password" label="密码">
+            <el-form-item prop="password" :label="$t('login.password')">
               <el-input
-                  placeholder="请输入密码"
+                  :placeholder="$t('login.passwordPlaceholder')"
                   size="default"
                   v-model.trim="loginParams.password"
                   type="password"
@@ -34,10 +34,10 @@
               />
             </el-form-item>
           </el-form>
-          <el-row>
+          <el-row style="margin-top: 10px">
             <div class="lang">
-              <span>language</span>
-              <el-select v-model="language">
+              <span>lang:</span>
+              <el-select v-model="language" @change="locale = language">
                 <el-option
                     v-for="(t,i) in langList"
                     :label="t.label"
@@ -45,11 +45,11 @@
                     :key="i"></el-option>
               </el-select>
             </div>
-            <span class="forgot-password">忘记密码</span>
+            <span class="forgot-password">{{$t('login.forgetPwd')}}</span>
           </el-row>
           <el-row style="margin-top: 30px">
             <el-button class="login-btn" @click="loginUser(loginFormRule)">
-              {{ btnText }}
+              {{ $t('login.login') }}
             </el-button>
           </el-row>
         </div>
@@ -58,32 +58,32 @@
         <div class="register-box">
           <el-form
               :model="registerParams"
-              label-width="80px"
+              label-width="100px"
               ref="registerFormRule"
               status-icon
               :rules="registerRules">
-            <el-form-item prop="username" label="账号">
-              <el-input placeholder="请输入账号" size="default" v-model.trim="registerParams.username"/>
+            <el-form-item prop="username" :label="$t('login.admin')">
+              <el-input :placeholder="$t('login.adminPlaceholder')" size="default" v-model.trim="registerParams.username"/>
             </el-form-item>
-            <el-form-item prop="password" label="密码">
-              <el-input placeholder="请输入密码" type="password" :show-password="true" size="default" v-model.trim="registerParams.password"/>
+            <el-form-item prop="password" :label="$t('login.password')">
+              <el-input :placeholder="$t('login.passwordPlaceholder')" type="password" :show-password="true" size="default" v-model.trim="registerParams.password"/>
             </el-form-item>
-            <el-form-item prop="nickname" label="昵称">
-              <el-input placeholder="请输入昵称" size="default" v-model.trim="registerParams.nickname"/>
+            <el-form-item prop="nickname" :label="$t('login.nickname')">
+              <el-input :placeholder="$t('login.nicknamePlaceholder')" size="default" v-model.trim="registerParams.nickname"/>
             </el-form-item>
-            <el-form-item prop="email" label="邮箱">
-              <el-input placeholder="请输入邮箱" size="default" v-model.trim="registerParams.email"/>
+            <el-form-item prop="email" :label="$t('login.email')">
+              <el-input :placeholder="$t('login.emailPlaceholder')" size="default" v-model.trim="registerParams.email"/>
             </el-form-item>
             <el-form-item prop="code" label="">
               <div class="code_list">
-                <el-input placeholder="请输入验证码" size="default" v-model.trim="registerParams.code"/>
-                <el-button class="code_btn" type="primary" @click="getCode(registerFormRule)">获取验证码</el-button>
+                <el-input :placeholder="$t('login.codePlaceholder')" size="default" v-model.trim="registerParams.code"/>
+                <el-button class="code_btn" type="primary" @click="getCode(registerFormRule)">{{ $t('login.getCode') }}</el-button>
               </div>
             </el-form-item>
           </el-form>
           <el-row style="margin-top: 30px">
             <el-button class="login-btn" @click="registerUser(registerFormRule)">
-              {{ btnText }}
+              {{ $t('login.register') }}
             </el-button>
           </el-row>
         </div>
@@ -99,15 +99,19 @@
   import type { FormInstance, FormRules } from 'element-plus'
   import {login, register, sendMail} from '@/api/user'
   import { setToken } from '@/hooks/user'
+  import {useI18n} from "vue-i18n";
+
+  const {locale} = useI18n()
 
   const pattern = ref<any>('login') // 登录/注册
-  const btnText = ref('登录')
 
   const router = useRouter()
   onMounted(() => {
+    language.value = navigator.language || 'zh'
+    locale.value = language.value
   })
 
-  const language = ref<string>('zh')
+  const language = ref<any>()
   const langList = [
     {
       label: '中文',
@@ -156,11 +160,9 @@
   const toggleLoginRegister = (val) => {
     if (val === 'login') {
       pattern.value = 'login'
-      btnText.value = '登录'
       resetRegisterParams()
     } else {
       pattern.value = 'register'
-      btnText.value = '注册'
       // 清空登录表单
       for (const t in loginParams) {
         loginParams[t] = ''
@@ -171,13 +173,13 @@
   const loginFormRule = ref<FormInstance>()
   const registerFormRule = ref<FormInstance>()
   const loginRules = reactive<FormRules>({
-    username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+    username: [{ required: true, message: '', trigger: 'blur' }],
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
   })
   const registerRules = reactive<FormRules>({
     username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
     nickname: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
-    email: [{ validator: checkEmail, trigger: 'blur' }],
+    email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
     code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
   })
@@ -209,7 +211,6 @@
             resetRegisterParams()
             ElMessage.success('注册成功，请登录')
             pattern.value = 'login'
-            btnText.value = '登录'
           }
         })
       }
@@ -350,7 +351,22 @@
       }
 
       .lang {
+        flex: 1;
+        height: 32px;
+        line-height: 32px;
+        display: flex;
+        margin-right: 20px;
+        overflow: hidden;
 
+        span {
+          width: 100px;
+          padding-right: 5px;
+          text-align: right;
+        }
+
+        :deep(.el-select) {
+          width: 100px;
+        }
       }
       .forgot-password {
         margin: 5px 0 0 auto;

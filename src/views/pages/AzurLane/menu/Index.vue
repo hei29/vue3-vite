@@ -61,8 +61,15 @@ const getActive = ():string => {
       width: 64px;
     }
 
-    .el-menu-item.is-active {
-      background: #243445;
+    .el-menu-item {
+      &.is-active {
+        background: #243445;
+      }
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 </style>

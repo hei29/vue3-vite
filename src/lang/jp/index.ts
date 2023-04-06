@@ -19,5 +19,26 @@ export default {
         userInfo: 'パーソナルセンター',
         userManage: 'ユーザー管理',
         changePwd: 'パスワードの変更'
+    },
+    login: {
+        login: 'ログイン＃ログイン＃',
+        register: '登録',
+        admin: 'アカウント',
+        password: 'パスワード',
+        nickname: 'ニックネーム',
+        email: 'メールボックス',
+        getCode: '認証コードの取得',
+        lang: '言語',
+        forgetPwd: 'パスワードを忘れる',
+        adminPlaceholder: 'アカウントを入力してください',
+        passwordPlaceholder: 'パスワードを入力してください',
+        nicknamePlaceholder: 'ニックネームを入力してください',
+        emailPlaceholder: 'メールアドレスを入力してください',
+        codePlaceholder: '認証コードを入力してください',
+        // adminWarn: '',
+        // passwordWarn: '',
+        // nicknameWarn: '',
+        // emailWarn: '',
+        // codeWarn: ''
     }
 }
