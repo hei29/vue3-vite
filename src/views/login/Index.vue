@@ -37,7 +37,7 @@
           <el-row style="margin-top: 10px">
             <div class="lang">
               <span>lang:</span>
-              <el-select v-model="language" @change="locale = language">
+              <el-select v-model="language" @change="changeLanguage">
                 <el-option
                     v-for="(t,i) in langList"
                     :label="t.label"
@@ -107,7 +107,8 @@
 
   const router = useRouter()
   onMounted(() => {
-    language.value = navigator.language || 'zh'
+    const langs = navigator.languages
+    language.value = localStorage.language || langs[langs.length-1] || 'zh'
     locale.value = language.value
   })
 
@@ -126,6 +127,10 @@
       value: 'jp'
     }
   ]
+  const changeLanguage = (val:string) => {
+    locale.value = val
+    localStorage.setItem('language', val)
+  }
 
   const loginParams = reactive({
     username: '',

@@ -18,7 +18,7 @@
     </div>
     <div class="body">
       <el-row>
-        <el-col v-for="(val, i) in sizerShip" :xl="3" :lg="3" :md="4" :sm="6" :xs="12" :key="val.painting">
+        <el-col v-for="val in sizerShip" :xl="3" :lg="3" :md="4" :sm="6" :xs="12" :key="val.painting">
           <div class="ship" @click="findShip(val)">
             <img :src="'/AzurLane/shipIcon/' + val.painting + '.png'" loading="lazy" alt="">
             <span>{{val.name}}</span>
